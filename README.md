@@ -8,7 +8,8 @@ In this exercise we will build machine learning and deep learning models that wi
 5. We evaluate the qulity of SVM model. We measure the accuracy of class prediction for images from the CIFAR-10 dataset.
 6. We check another variation of transfer learning.
 
-# 01 Visualize dataset
+# 01 Visualize dataset 
+#### [source code](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/01-grid-images.py)
 First of all let's visualize the images from the CIFAR-10 collection. At the beginnig we download images from torchvision repository:
 ```
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform_train)
@@ -27,6 +28,7 @@ The result is as follows:
 ![](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/images.png)
 
 # 02 CNN codes extraction
+#### [source code](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/02-extract-cnn-codes.py)
 
 Once we've downloaded CIFAR-10 dataset, let's extract visual features using a pre-trained CNN network. We'll use pre-trained ResNet-101. 
 
@@ -48,6 +50,7 @@ X = resnet(Variable(inputs.cuda())).data.cpu().numpy()
 ```
 
 # 03 CNN codes visualization
+#### [source code](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/03-visualize-cnn-codes.py)
 
 In order to visualize CNN codes in two dimensions we'll use two algorithms: PCA (Principal component analysis) and tSNE (t-distributed Stochastic Neighbor Embedding). tSNE is considered to be the best technique for visualizing multidimensional data in 2D, however in our case CNN codes are 2048-dimensional (due to the size of the penultimate layer of ResNet) what could be too big for tSNE. Therefore at the beginning we will use PCA to reduce the number of dimensions from 2048 to 200
 ```
@@ -66,6 +69,7 @@ The result of 2D visualization is:
 ![](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/CNN_codes_2D.png)
 
 # 04 SVM training
+#### [source code](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/04-train-svm.py)
 
 SVM classifier will be trained on the top of CNN codes. But first of all we should tune the parameters of SVM classifier and choose those values of the parameters for which classifier has the top accuracy. To do this we'll perform Grid Search. (Random Search would be better if we had to tune many parameters at once):
 
@@ -78,6 +82,7 @@ svm = GridSearchCV(SVC(), param_grid=tuned_parameters, n_jobs=config.jobs)
 During Grid search the k-fold validation is performed (train SVM on one part of the dataset and validate SVM's accuracy on the another part of dataset). The optimal value of C parameter is determined as a result of Grid search: C=100.0. The accuracy on valiadtion set for C=100.0 is 83%.
 
 # 05 Accuracy of the SVM model
+#### [source code](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/05-test-svm.py)
 
 The model obtained during the training will be tested on the test set of CIFAR-10. We download test images from torchvision repository:
 ```
@@ -103,6 +108,7 @@ accuracy.append(svm.score(X.squeeze(), y))
 The accuracy of classification measured on the test set is 84.5%.
 
 # 06 Another approach to Transfer Learning
+#### [source code](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/06-validate-transfer-learning.py)
 
 In this paragraph another approach to Transfer Learning will be presented. Instead of using CNN codes to train a classifier on top of it, we'll get pretrained ResNet model and then replace the last layer of it:
 
