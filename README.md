@@ -93,3 +93,21 @@ Finally, we'll use a trained SVM to get the accuracy of the classification:
 accuracy.append(svm.score(X.squeeze(), y))
 ```
 The accuracy of classification measured on the test set is 84.5%.
+
+# 06 Another approach to Transfer Learning
+
+In this paragraph another approach to Transfer Learning will be presented. Instead of using CNN codes to train a classifier on top of it, we'll get pretrained ResNet model and then replace the last layer of it:
+
+```
+model_ft = models.resnet50(pretrained=True)
+num_features = model_ft.fc.in_features
+model_ft.fc = nn.Linear(num_features, 10)
+```
+Now the neural network has 10 outputs, which is the number of categories in the CIFAR-10 dataset. Then we'll train such a neural network in online mode, using mini-batches of images from CIFAR-10 dataset. Adam optimizer is used and the optimization criterion is cross-entropy:
+
+```
+criterion = nn.CrossEntropyLoss()
+optimizer_ft = optim.Adam(model_ft.fc.parameters())
+```
+
+The accuracy of classification and the value of loss function in subsequent epochs is shown in the picture:
