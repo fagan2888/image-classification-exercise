@@ -68,3 +68,28 @@ svm = GridSearchCV(SVC(), param_grid=tuned_parameters, n_jobs=config.jobs)
 ```
 
 During Grid search the k-fold validation is performed (train SVM on one part of the dataset and validate SVM's accuracy on the another part of dataset). The optimal value of C parameter is determined as a result of Grid search: C=100.0. The accuracy on valiadtion set for C=100.0 is 83%.
+
+# 05 Accuracy of the SVM model
+
+The model obtained during the training will be tested on the test set of CIFAR-10. We download test images from torchvision repository:
+```
+testloader = torch.utils.data.DataLoader(testset, batch_size=config.batch_size, shuffle=False, num_workers=config.jobs)
+```
+Once we've downloaded CIFAR-10 dataset, let's extract visual features using a pre-trained CNN network. We'll use penultimate layer of pre-trained ResNet-101
+```
+resnet = torchvision.models.resnet101(pretrained=True)
+resnet_modules = list(resnet.children())[:-1]
+resnet = nn.Sequential(*resnet_modules)
+```
+
+We'll get CNN codes by passing images from CIFAR-10 dataset through the resnet network:
+
+```
+X = resnet(Variable(inputs.cuda())).data.cpu().numpy()
+```
+
+Finally, we'll use a trained SVM to get the accuracy of the classification:
+```
+accuracy.append(svm.score(X.squeeze(), y))
+```
+The accuracy of classification measured on the test set is 84.5%.
