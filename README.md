@@ -16,7 +16,7 @@ transform_train = transforms.Compose([
 ```
 
 The result is as follows:
-(https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/images.png)
+![](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/images.png)
 
 # 02 CNN codes extraction
 
@@ -55,7 +55,7 @@ tsne_results = tsne.fit_transform(pca_result)
 ```
 
 The result of 2D visualization is:
-(https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/CNN_codes_2D.png)
+![](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/CNN_codes_2D.png)
 
 # 04 SVM training
 
@@ -111,3 +111,5 @@ optimizer_ft = optim.Adam(model_ft.fc.parameters())
 ```
 
 The accuracy of classification and the value of loss function in subsequent epochs is shown in the picture:
+![](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/adam_acc.png)
+![](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/adam_loss.png)
