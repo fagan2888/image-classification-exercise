@@ -1,5 +1,13 @@
 # Exercise
-In this exercise we will build machine learning and deep learning models that will recognize images from the CIFAR-10 dataset.
+In this exercise we will build machine learning and deep learning models that will recognize images from the CIFAR-10 dataset. The plan is as follows:
+
+1. We load and visulize images from CIFAR-10 dataset.
+2. We do feautre extraction for CIFAR-10 images by means of transfer learning (use of pre-trained neural network).
+3. We visualize these features by embedding them in two dimensions.
+4. We train (and tune) SVM model on top of the features extracted by means of transfer learning.
+5. We evaluate the qulity of SVM model. We measure the accuracy of class prediction for images from the CIFAR-10 dataset.
+6. We check another variation of transfer learning.
+
 # 01 Visualize dataset
 First of all let's visualize the images from the CIFAR-10 collection. At the beginnig we download images from torchvision repository:
 ```
@@ -113,3 +121,5 @@ optimizer_ft = optim.Adam(model_ft.fc.parameters())
 The accuracy of classification and the value of loss function in subsequent epochs is shown in the picture:
 ![](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/adam_acc.png)
 ![](https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/adam_loss.png)
+
+The accuracy is 85% what is close to what was achieved by training SVM model on top of the CNN codes.
