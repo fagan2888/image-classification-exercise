@@ -55,3 +55,16 @@ tsne_results = tsne.fit_transform(pca_result)
 ```
 
 The result of 2D visualization is:
+(https://github.com/witold-oleszkiewicz/image-classification-exercise/blob/master/CNN_codes_2D.png)
+
+# 04 SVM training
+
+SVM classifier will be trained on the top of CNN codes. But first of all we should tune the parameters of SVM classifier and choose those values of the parameters for which classifier has the top accuracy. To do this we'll perform Grid Search. (Random Search would be better if we had to tune many parameters at once):
+
+```
+C_range = np.logspace(-3, 10, 10)
+tuned_parameters = [{'C':C_range}, {'kernel':['linear']}, {'decision_function_shape':['ovo']}]
+svm = GridSearchCV(SVC(), param_grid=tuned_parameters, n_jobs=config.jobs)
+```
+
+During Grid search the k-fold validation is performed (train SVM on one part of the dataset and validate SVM's accuracy on the another part of dataset). The optimal value of C parameter is determined as a result of Grid search: C=100.0. The accuracy on valiadtion set for C=100.0 is 83%.
